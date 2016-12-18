@@ -32,8 +32,9 @@ public class Main extends Application
 
 			stage.setResizable(true);
 			stage.getIcons().add(new Image("/de/deadlocker8/loadingbar/resources/icon.png"));
-			stage.setTitle(bundle.getString("app.name"));
+			stage.setTitle(bundle.getString("app.name"));			
 			stage.setScene(scene);
+			stage.getScene().getStylesheets().add("de/deadlocker8/loadingbar/ui/style.css");
 			stage.show();
 		}
 		catch(Exception e)

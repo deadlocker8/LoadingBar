@@ -1,58 +1,119 @@
 package de.deadlocker8.loadingbar.ui;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import tools.AlertGenerator;
 
 public class Controller
 {
-	@FXML private Label label;
+	@FXML private AnchorPane mainPane;
+	@FXML private Label labelTarget;
+	@FXML private Label labelUser;
+	@FXML private Label labelMessage;
 	@FXML private ProgressBar progressBar;
+	@FXML private ProgressBar progressBarTarget;
+	@FXML private StackPane stackPane;
 
 	private Stage stage;
 	private Image icon = new Image("de/deadlocker8/loadingbar/resources/icon.png");
 	private final ResourceBundle bundle = ResourceBundle.getBundle("de/deadlocker8/loadingbar/main/", Locale.GERMANY);
 	private CountdownTimer timer;
+	private int targetPercentage;
+	private boolean swapped;
 
 	public void init(Stage stage)
 	{
 		this.stage = stage;
+
+		mainPane.setStyle("-fx-background-color: #333333");
+		stackPane.setStyle("-fx-background-color: derive(#333333, -60%)");
+		progressBar.setStyle("-fx-accent: white;");	
+		labelTarget.setStyle("-fx-text-fill: white; -fx-font-size: 40; -fx-font-weight: bold;");
+		labelUser.setStyle("-fx-text-fill: white; -fx-font-size: 30; -fx-font-weight: bold;");
+		labelMessage.setStyle("-fx-text-fill: white; -fx-font-size: 30; -fx-font-weight: bold;");
 	}
-	
+
 	public void buttonStart()
 	{
+		if(swapped)
+		{
+			swapProgressBars();
+			swapped = false;
+		}
+
 		Random random = new Random();
-		int targetPercentage = 10 + random.nextInt(90 - 10 + 1);
-		label.setText(String.valueOf(targetPercentage));
-		
+		targetPercentage = 15 + random.nextInt(90 - 15 + 1);
+		labelTarget.setText(String.valueOf(targetPercentage));
+		labelUser.setText("");
+		labelMessage.setText("");
+
+		progressBarTarget.setProgress(0.0);
+
 		progressBar.setProgress(0.0);
 		timer = new CountdownTimer(4.0, this);
 	}
-	
+
 	public void buttonStop()
 	{
 		stop(timer.stop());
 	}
-	
+
 	public void updateProgress(double value)
 	{
 		progressBar.setProgress(value);
 	}
-	
+
+	private void swapProgressBars()
+	{
+		ObservableList<Node> workingCollection = FXCollections.observableArrayList(stackPane.getChildren());
+		Collections.swap(workingCollection, 0, 1);
+		stackPane.getChildren().setAll(workingCollection);
+	}
+
 	public void stop(double value)
 	{
 		int userPercentage = (int)(value * 100);
-		
-		label.setText(label.getText() + " - " + userPercentage);
+		labelUser.setText(String.valueOf(userPercentage));
+		progressBar.setProgress(userPercentage / 100.0);
+		progressBarTarget.setProgress(targetPercentage / 100.0);
+		progressBarTarget.setStyle("-fx-accent: red");
+
+		if(userPercentage < targetPercentage)
+		{
+			swapped = true;
+			swapProgressBars();
+		}
+
+		int difference = Math.abs(targetPercentage - userPercentage);
+		switch(difference)
+		{
+			case 0:
+				labelMessage.setText("Awesome!");
+				break;
+			case 1:
+				labelMessage.setText("Close One!");
+				break;
+			case 2:
+				labelMessage.setText("Almost");
+				break;
+			default:
+				labelMessage.setText("Missed by " + difference);
+		}
 	}
-	
+
 	public Stage getStage()
 	{
 		return stage;
@@ -60,6 +121,6 @@ public class Controller
 
 	public void about()
 	{
-		AlertGenerator.showAboutAlert(bundle.getString("app.name"), bundle.getString("version.name"), bundle.getString("version.code"), bundle.getString("version.date"), bundle.getString("author"), icon, stage, null, false);	
+		AlertGenerator.showAboutAlert(bundle.getString("app.name"), bundle.getString("version.name"), bundle.getString("version.code"), bundle.getString("version.date"), bundle.getString("author"), icon, stage, null, false);
 	}
 }

@@ -1,0 +1,18 @@
+.progress-bar {
+    -fx-indeterminate-bar-length: 60;
+    -fx-indeterminate-bar-escape: true;
+    -fx-indeterminate-bar-flip: true;
+    -fx-indeterminate-bar-animation-time: 2;
+}
+.progress-bar > .bar {
+    -fx-background-color: -fx-accent;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0.75em;
+}
+
+.progress-bar > .track {  
+    -fx-background-color: transparent;          
+    -fx-background-insets: 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-radius: 0, 0, 0;
+}
