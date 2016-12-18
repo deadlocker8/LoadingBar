@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -20,12 +21,14 @@ import tools.AlertGenerator;
 public class Controller
 {
 	@FXML private AnchorPane mainPane;
+	@FXML private Label labelDescription;
 	@FXML private Label labelTarget;
 	@FXML private Label labelUser;
 	@FXML private Label labelMessage;
 	@FXML private ProgressBar progressBar;
 	@FXML private ProgressBar progressBarTarget;
 	@FXML private StackPane stackPane;
+	@FXML private Button buttonStop;
 
 	private Stage stage;
 	private Image icon = new Image("de/deadlocker8/loadingbar/resources/icon.png");
@@ -33,17 +36,20 @@ public class Controller
 	private CountdownTimer timer;
 	private int targetPercentage;
 	private boolean swapped;
+	private final String BACKGROUND_COLOR = "#333333";
 
 	public void init(Stage stage)
 	{
 		this.stage = stage;
 
-		mainPane.setStyle("-fx-background-color: #333333");
-		stackPane.setStyle("-fx-background-color: derive(#333333, -60%)");
+		mainPane.setStyle("-fx-background-color: " + BACKGROUND_COLOR);
+		stackPane.setStyle("-fx-background-color: derive(" + BACKGROUND_COLOR + ", -60%)");
 		progressBar.setStyle("-fx-accent: white;");	
+		labelDescription.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;");
 		labelTarget.setStyle("-fx-text-fill: white; -fx-font-size: 40; -fx-font-weight: bold;");
 		labelUser.setStyle("-fx-text-fill: white; -fx-font-size: 30; -fx-font-weight: bold;");
 		labelMessage.setStyle("-fx-text-fill: white; -fx-font-size: 30; -fx-font-weight: bold;");
+		buttonStop.setStyle("-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 3; -fx-border-radius: 0; -fx-text-fill: white;");
 	}
 
 	public void buttonStart()
