@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.deadlocker8.loadingbar.ui.Controller">
+<AnchorPane fx:id="mainPane" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.deadlocker8.loadingbar.ui.Controller">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="25.0" layoutY="16.0" prefHeight="363.0" prefWidth="350.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
          <children>
@@ -53,16 +53,11 @@
             </Label>
             <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#buttonStop" text="STOP">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="40.0" />
                </VBox.margin>
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#buttonStart" text="Start">
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
             </Button>
          </children>
       </VBox>

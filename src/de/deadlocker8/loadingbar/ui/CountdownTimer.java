@@ -23,7 +23,7 @@ public class CountdownTimer
 	
 	public void start()
 	{	
-		time = 0.0;
+		time = 0.0;	
 		
 		task = new TimerTask()
 		{
@@ -61,8 +61,7 @@ public class CountdownTimer
 	public double stop()
 	{
 		timer.cancel();		
-		timer.purge();
-		
+		timer.purge();		
 		
 		return time / count;
 	}

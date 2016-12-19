@@ -26,7 +26,7 @@ public class Main extends Application
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("de/deadlocker8/loadingbar/ui/GUI.fxml"));
 			Parent root = (Parent)loader.load();
 
-			Scene scene = new Scene(root, 600, 600);			
+			Scene scene = new Scene(root, 600, 500);			
 
 			((Controller)loader.getController()).init(stage);
 

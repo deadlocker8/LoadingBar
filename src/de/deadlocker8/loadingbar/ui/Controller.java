@@ -37,6 +37,7 @@ public class Controller
 	private int targetPercentage;
 	private boolean swapped;
 	private final String BACKGROUND_COLOR = "#333333";
+	private boolean running;
 
 	public void init(Stage stage)
 	{
@@ -50,31 +51,43 @@ public class Controller
 		labelUser.setStyle("-fx-text-fill: white; -fx-font-size: 30; -fx-font-weight: bold;");
 		labelMessage.setStyle("-fx-text-fill: white; -fx-font-size: 30; -fx-font-weight: bold;");
 		buttonStop.setStyle("-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 3; -fx-border-radius: 0; -fx-text-fill: white;");
+		
+		buttonStop.setText("START");
 	}
 
-	public void buttonStart()
+	public void start()
 	{
 		if(swapped)
 		{
 			swapProgressBars();
 			swapped = false;
 		}
+		
+		running = true;
+		buttonStop.setText("STOP");
 
 		Random random = new Random();
-		targetPercentage = 15 + random.nextInt(90 - 15 + 1);
+		targetPercentage = 20 + random.nextInt(90 - 20 + 1);
 		labelTarget.setText(String.valueOf(targetPercentage));
 		labelUser.setText("");
 		labelMessage.setText("");
 
 		progressBarTarget.setProgress(0.0);
 
-		progressBar.setProgress(0.0);
+		progressBar.setProgress(0.0);	
 		timer = new CountdownTimer(4.0, this);
 	}
 
 	public void buttonStop()
 	{
-		stop(timer.stop());
+		if(running)
+		{
+			stop(timer.stop());
+		}
+		else
+		{
+			start();
+		}
 	}
 
 	public void updateProgress(double value)
@@ -91,6 +104,9 @@ public class Controller
 
 	public void stop(double value)
 	{
+		running = false;
+		buttonStop.setText("START");	
+		
 		int userPercentage = (int)(value * 100);
 		labelUser.setText(String.valueOf(userPercentage));
 		progressBar.setProgress(userPercentage / 100.0);
